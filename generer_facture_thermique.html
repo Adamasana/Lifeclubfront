@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Facture</title>
+    <style>
+        body {
+            font-family: monospace;
+            font-size: 11px;
+            width: 58mm;
+            margin: 0 auto;
+        }
+        .center { text-align: center; }
+        .bold { font-weight: bold; }
+        .line { border-top: 1px dashed #000; margin: 5px 0; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        th, td {
+            padding: 2px 0;
+            text-align: left;
+        }
+        th {
+            border-bottom: 1px solid #000;
+        }
+        .total {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="center bold">{{ commande.boutique.nom }}</div>
+    <div class="center">Facture N° {{ commande.numero }}</div>
+    <div class="line"></div>
+
+    <div>Client : {{ commande.nom }}</div>
+    <div>Tél : {{ commande.telephone }}</div>
+    <div>Caissier : {{ commande.caissier.get_full_name }}</div>
+    <div>Date : {{ commande.date_created|date:"d/m/Y H:i" }}</div>
+    <div class="line"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Désignation</th>
+                <th>PU</th>
+                <th>Qté</th>
+                <th>Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for achat in achats %}
+            <tr>
+                <td>{{ achat.variation.nom }}</td>
+                <td>{{ achat.prix_unitaire }}</td>
+                <td>{{ achat.quantite }}</td>
+                <td>{{ achat.montant }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="line"></div>
+    <div>Total articles : {{ total_articles }}</div>
+    {% if commande.remise > 0 %}
+        <div>Remise : {{ commande.remise }} FCFA</div>
+    {% endif %}
+    <div class="total">Total à payer : {{ commande.total }} FCFA</div>
+    <div class="line"></div>
+    <div class="center">Merci pour votre achat !</div>
+</body>
+</html>

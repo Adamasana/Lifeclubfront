@@ -1,0 +1,204 @@
+{% load static %}
+{% load humanize %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details controle</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Inventaire du {{ inventaire.date }}</h1>
+            <div class="d-inline-flex mb-5">
+                <p class="m-0"><a href="{% url 'controles' %}">Retour</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0" data-toggle="modal" data-target="#add" style="cursor: pointer;">Ajouter</p>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Page Header End -->
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <li style="list-style:none; text-align: center; color: red;">{{ message }}</li>
+                {% elif message.tags == 'success' %}
+                    <li style="list-style:none; text-align: center; color: green;">{{ message }}</li>
+                {% else %}
+                    <li style="list-style:none; text-align: center;">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <!-- Accepter Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-1">
+            <div class="col-lg-9 table-responsive mb-5">
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>Produits</th>
+                            <th>Quantite Stock</th>
+                            <th>Quantite Reelle</th>
+                            <th>Difference</th>
+                            <th>Valeur Achat</th>
+                            <th>Valeur Vente</th>
+                            
+                            {% if user.proprietaire_profile %}
+                                <th>Marge</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        
+                        {% for unite in unites %}
+                            
+                            <tr> 
+                                <td class="align-middle">{{ unite.variation.nom }}</td>
+                                <td class="align-middle">{{ unite.quantite_stock }}</td>
+                                <td class="align-middle">{{ unite.quantite_reelle }}</td>
+                                <td class="align-middle {% if unite.difference_articles < 0 %} text-danger {% elif unite.difference_articles > 0 %} text-success {% endif %}">
+                                    {{ unite.difference_articles|abs_val }}
+                                </td>
+                                <td class="align-middle {% if unite.valeur_revient < 0 %} text-danger {% elif unite.valeur_revient > 0 %} text-success {% endif %}">{{ unite.valeur_revient|abs_val|intcomma }} FCFA</td>
+                                <td class="align-middle {% if unite.valeur_vente < 0 %}text-danger {% elif unite.valeur_vente > 0 %} text-success {% endif %}">{{ unite.valeur_vente|abs_val|intcomma }} FCFA</td>
+                                {% if user.proprietaire_profile %}
+                                    <td class="align-middle {% if unite.difference_valeur < 0 %}text-danger {% elif unite.difference_valeur > 0 %} text-success {% endif %}">{{ unite.difference_valeur|abs_val|intcomma }} FCFA</td>
+                                {% endif %}
+                            </tr>
+
+                        {% endfor %}
+                            
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- MODAL Suppression-->
+            <div class="modal fade" id="modstock" tabindex="-1" role="dialog" aria-labelledby="modstock" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modstock">Confirmer la Modifiaction</h5>
+                            <strong style="cursor: pointer;" class="close" data-dismiss="modal" aria-label="Fermer">
+                            <span aria-hidden="true">&times;</span>
+                            </strong>
+                        </div>
+                        <div class="modal-body">
+                            <i class="fas fa-exclamation-triangle text-danger"></i><span class="text-danger font-weight-semi-bold text-uppercase"> Avertissement :</span> Les quantités réelles des produits sur cet inventaire vont devenir les nouvelles quantités en stock !
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <button onclick="window.location.href='{% url 'mod_stock_inventaire' inventaire.id %}'" class="btn btn-danger">Confirmer</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Inventaire</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Articles Perdus</h6>
+                            <h6 class="font-weight-medium">{{ inventaire.articles_perdus }}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Valeur (Achat)</h6>
+                            <h6 class="font-weight-medium">{{ inventaire.valeur_achat_perdu|abs_val|intcomma }} FCFA</h6>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Valeur (Vente)</h6>
+                            <h6 class="font-weight-medium">{{ inventaire.valeur_vente_perdu|abs_val|intcomma }} FCFA</h6>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Articles Retrouvés</h6>
+                            <h6 class="font-weight-medium">{{ inventaire.articles_retrouves }}</h6>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Valeur (Achat)</h6>
+                            <h6 class="font-weight-medium">{{ inventaire.valeur_achat_retrouve|abs_val|intcomma }} FCFA</h6>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Valeur (Vente)</h6>
+                            <h6 class="font-weight-medium">{{ inventaire.valeur_vente_retrouve|abs_val|intcomma }} FCFA</h6>
+                        </div>
+                        
+                    </div>
+                {% if inventaire.stock_a_jour == 'non' %}
+                    <button data-toggle="modal" data-target="#modstock" class="btn btn-block btn-primary my-3 py-3" style="font-size: 25px; font-weight: bold;">
+                        Mettre à jour le stock
+                    </button>
+                {% elif inventaire.stock_a_jour == 'oui' %}
+                    <span>Stock déjà à jour</span>
+                {% else %}
+                    <span>Statut inconnu</span>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    <!-- Accepter End -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let code = '';
+            let isScanning = false;
+            const delay = 100; // temps de reset après frappe
+        
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (code.length > 0) {
+                        // Envoie le formulaire caché
+                        document.getElementById('code-input').value = code;
+                        document.getElementById('quantite-input').value = 1;
+                        document.getElementById('auto-form').submit();
+                        code = '';
+                    }
+                } else if (e.key.length === 1) {
+                    // Ajoute uniquement les vrais caractères tapés (pas Shift, Ctrl, etc.)
+                    code += e.key;
+        
+                    clearTimeout(window.scanTimeout);
+                    window.scanTimeout = setTimeout(function () {
+                        code = ''; // Réinitialiser après un moment sans saisie
+                    }, delay);
+                }
+            });
+        });
+        </script>
+        
+        
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    
+
+    
+</body>
+</html>

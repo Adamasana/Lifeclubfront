@@ -1,0 +1,285 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Produit</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-1">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Profil Produit</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="{% url 'stock' %}">Retour</a></p>
+                <p class="m-0 px-2">-</p>
+            <!--
+                <p class="m-0" style="cursor: pointer;" >Inventaire</p>
+                <p class="m-0 px-2">-</p> -->
+                <p class="m-0">Detail</p>
+            </div>
+        </div>
+    </div>
+    
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <li style="list-style:none; text-align: center; color: red;">{{ message }}</li>
+                {% elif message.tags == 'success' %}
+                    <li style="list-style:none; text-align: center; color: green;">{{ message }}</li>
+                {% else %}
+                    <li style="list-style:none; text-align: center;">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <!-- Page Header End -->
+    <div class="container-fluid pt-5">
+        <h3 style="text-align: center;">Produit</h3>
+        <div class="row px-xl-1">
+            <div class="col-lg-12 table-responsive mb-5">
+                <table class="table text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>Code</th>
+                            <th>Nom</th>
+                            <th>Prix achat</th>
+                            <th>Prix de vente</th>
+                            <th>Autres details</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        
+                            <tr>
+                                <td class="align-middle" onclick="window.location.href='#'" style="cursor:pointer; color: #5fbff2">{{ variation|code_sans_identifiant }}
+                                </td>
+                                <td class="align-middle">{{ variation.nom }}</td>
+                                <td class="align-middle">{{ variation.prix_achat }}</td>
+                                <td class="align-middle">{{ variation.prix_vente }}</td>
+                                <td class="align-middle">{{ variation.couleur }} - {{ variation.pointure }}</td>
+                                <td>
+                                    <img width="50px" height="50px"  src= "{{ variation.image.url }}"/>
+                                </td>
+
+                                <td class="align-middle" data-toggle="modal" data-target="#desactiver">
+                                    {% if variation.statut == 'actif' %}
+                                        <button type="submit" class="btn btn-sm btn-danger">Désactiver</button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-sm btn-success">Activer</button>
+                                    {% endif %}
+                                </td>
+
+                                <td class="align-middle" data-toggle="modal" data-target="#update">
+
+                                        <button type="submit" class="btn btn-sm btn-warning">
+                                            Modifier
+                                        </button>
+
+                                </td>
+                                
+
+                                <td data-toggle="modal" data-target="#confirmModal" class="align-middle">
+                                    
+                                        <button  class="btn btn-sm btn-danger">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+
+                                </td>
+
+                                
+
+                                <!-- MODAL Suppression-->
+                                <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <form method="post" action="{% url 'supprimer_variation' variation.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="ine">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmModalLabel">Confirmer la suppression</h5>
+                                            <strong style="cursor: pointer;" class="close" data-dismiss="modal" aria-label="Fermer">
+                                            <span aria-hidden="true">&times;</span>
+                                            </strong>
+                                        </div>
+                                        <div class="modal-body">
+                                            Sûr de vouloir supprimer cet produit ainsi que tout son stock ? 
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                        </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <form method="post" action="{% url 'update_variation' variation.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="ine">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmModalLabel">Modification</h5>
+                                            <strong style="cursor: pointer;" class="close" data-dismiss="modal" aria-label="Fermer">
+                                            <span aria-hidden="true">&times;</span>
+                                            </strong>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <label for="justification">Code produit : </label>
+                                            <input type="text" name="code" id="code" class="form-control mb-2" value="{{ variation.code }}" required>
+                                            <label for="justification">Nom : </label>
+                                            <input type="text" name="nom" id="nom" class="form-control mb-2" value="{{ variation.nom }}" required>
+                                            <label for="justification">Prix achat : </label>
+                                            <input type="text" name="achat" id="achat" class="form-control mb-2" value="{{ variation.prix_achat }}" required>
+                                            <label for="justification">prix vente : </label>
+                                            <input type="text" name="vente" id="vente" class="form-control mb-2" value="{{ variation.prix_vente }}" required>
+                                            <label for="justification">Image : </label>
+                                            <input type="file" name="image" id="image" class="form-control mb-2" value="{{ variation.image.url }}">
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="btn btn-primary">Confirmer</button>
+                                        </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+
+
+                                <div class="modal fade" id="desactiver" tabindex="-1" role="dialog" aria-labelledby="desactiver" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <form method="post" action="{% url 'change_statut_variation' variation.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="ine">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="desactiver">Confirmer la Descativation</h5>
+                                            <strong style="cursor: pointer;" class="close" data-dismiss="modal" aria-label="Fermer">
+                                            <span aria-hidden="true">&times;</span>
+                                            </strong>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% if variation.statut == 'actif' %}
+                                            Sûr de vouloir desactiver ce produit ? il ne sera plus pris en compte pour les nouvelles commandes
+                                            {% else %}
+                                            Sûr de vouloir reactiver ce produit ? il sera desormais pris en compte pour les nouvelles commandes
+                                            {% endif %}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            {% if variation.statut == 'actif' %}
+                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                            {% else %}
+                                            <button type="submit" class="btn btn-success">Confirmer</button>
+                                            {% endif %}
+                                        </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+
+                            </tr>    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- panier End -->
+
+    <!-- panier Start -->
+    <div class="container-fluid pt-5">
+        <h3 style="text-align: center;">Stock</h3>
+        <div class="row px-xl-1">
+            <div class="col-lg-12 table-responsive mb-5">
+                
+                <table class="table text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>Boutique</th>
+                            <th>Quantite</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        {% for stock in stocks %}
+                            
+                            <tr>
+                                <td class="align-middle">{{ stock.boutique.nom }}</td>
+                                <td class="align-middle">{{ stock.quantite }}</td>
+
+                                <!-- <td data-toggle="modal" data-target="#confirmModal1" class="align-middle">
+
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+
+                                </td>
+                                
+                                
+                                MODAL Suppression
+                                <div class="modal fade" id="confirmModal1" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <form method="post" action="#">
+
+                                        <input type="hidden" name="ine">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmModalLabel">Confirmer la suppression</h5>
+                                            <strong style="cursor: pointer;" class="close" data-dismiss="modal" aria-label="Fermer">
+                                            <span aria-hidden="true">&times;</span>
+                                            </strong>
+                                        </div>
+                                        <div class="modal-body">
+                                            Sûr de vouloir supprimer cette variation ainsi que son stock ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                        </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>-->
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- panier End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

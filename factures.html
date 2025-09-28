@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factures</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+    
+
+    tbody tr:hover {
+      background-color: #f4f2f2ae;
+    }
+    </style>
+</head>
+
+<body style="overflow-x: hidden;">
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-1">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Factures</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="index.html">Gestion</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0" style="cursor: pointer;" onclick="window.location.href='#'">Ajouter</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            
+            <div class="tab-content">
+                <div class="tab-pane fade show active">
+                    <div class="container-fluid pt-5">
+                        <div class="row">
+                            <div class="col-lg-12 table-responsive mb-5">
+                                <table class="table text-center mb-0">
+                                    <thead class="bg-secondary text-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nom</th>
+                                            <th>Montant</th>
+                                            <th>Remise</th>
+                                            <th>Total</th>
+                                            
+                                            <th>Marge</th>
+                                            
+                                            <th>Origine</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+
+                                            <tr style="cursor: pointer;">
+                                                <td style="font-weight: bold;" onclick="window.location.href='details_facture.html'">LC24243</td>
+                                                <td onclick="window.location.href='#'">SANA Adama</td>
+                                                <td onclick="window.location.href='#'">3243 FCFA</td>
+                                                <td onclick="window.location.href='#'">3412 FCFA</td>
+                                                <td onclick="window.location.href='#'">2321 FCFA</td>
+                                                
+                                                <td onclick="window.location.href='#'">2131 FCFA</td>
+                                                
+                                                <td onclick="window.location.href='#'">Life Club</td>
+                                                <td onclick="window.location.href='#'">12 Juillet 2k25</td>
+                                                <td class="align-middle">
+
+                                                        <button data-toggle="modal" data-target="#suppressioncommande1" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+
+                                                </td>
+
+                                                <!-- MODAL Suppression-->
+                                                <div class="modal fade" id="suppressioncommande1" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel1" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <form method="post" action="#">
+                                                    
+                                                        <input type="hidden" name="ine">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="confirmModalLabel">Confirmer la suppression</h5>
+                                                            <strong style="cursor: pointer;" class="close" data-dismiss="modal" aria-label="Fermer">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </strong>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Sûr de vouloir supprimer cette facture ?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                                        </div>
+                                                        </div>
+                                                    </form>
+                                                    </div>
+                                                </div>
+                                            </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

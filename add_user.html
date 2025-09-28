@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte utilisateur</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            justify-content: center; /* Centrer le contenu horizontalement */
+            align-items: center; /* Centrer le contenu verticalement */
+            height: 90vh;
+        }
+        form {
+            max-width: 99%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group {
+            width: 400px;
+            flex-grow: 1; /* Partage l'espace disponible entre les divs */
+            margin:20px;
+        }
+        /* Permet aux divs enfants de revenir à la ligne si l'espace est insuffisant */
+        .form-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        label{
+            margin-bottom: 0;
+            margin-top: 5px;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        input[type="password"], input[type="text"] {
+            padding-right: 35px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="font-weight-semi-bold text-uppercase mb-3" style="text-align: center; margin: 40px;">Compte utilisateur</h1>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <li style="list-style:none; text-align: center; color: red;">{{ message }}</li>
+                    {% elif message.tags == 'success' %}
+                        <li style="list-style:none; text-align: center; color: green;">{{ message }}</li>
+                    {% else %}
+                        <li style="list-style:none; text-align: center;">{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    <form action="{% url 'add_user' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="form-group">
+                
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" required>
+
+                <label for="prenom">Prénom(s):</label>
+                <input type="text" id="prenom" name="prenom" required>
+
+                <label for="cnib">CNIB:</label>
+                <input type="file" id="cnib" name="cnib">
+
+                
+            </div>
+
+            <div class="form-group">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="poste">Poste:</label>
+                <input type="text" id="poste" name="poste" required>
+
+                <label for="boutique">Boutique:</label>
+                <select id="boutique" name="boutique">
+                    <option value="" disabled selected>Choisir une Boutique</option>
+                    {% for boutique in boutiques %}
+                        <option value="{{ boutique.id }}">{{ boutique.nom }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>  
+
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password1">Mot de passe :</label>
+                <div class="password-wrapper mb-2">
+                    <input type="password" id="password1" name="password1" class="form-control" required>
+                    <i class="fas fa-eye toggle-password" toggle="#password1"></i>
+                </div>
+
+                <label for="password2">Répéter le mot de passe :</label>
+                <div class="password-wrapper mb-2">
+                    <input type="password" id="password2" name="password2" class="form-control" required>
+                    <i class="fas fa-eye toggle-password" toggle="#password2"></i>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <a class="btn btn-secondary" style="font-size: 18px;">Annuler</a>
+        <button type="submit" class="btn btn-primary" style="font-size: 18px;">Valider</button>
+    </form>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <script>
+        // Toggle visibility
+        document.querySelectorAll(".toggle-password").forEach(icon => {
+            icon.addEventListener("click", function () {
+                const input = document.querySelector(this.getAttribute("toggle"));
+                if (input.type === "password") {
+                    input.type = "text";
+                    this.classList.remove("fa-eye");
+                    this.classList.add("fa-eye-slash");
+                } else {
+                    input.type = "password";
+                    this.classList.remove("fa-eye-slash");
+                    this.classList.add("fa-eye");
+                }
+            });
+        });
+    
+        const password1 = document.getElementById("password1");
+        const password2 = document.getElementById("password2");
+    
+        function validatePasswordStrength(value) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+            return regex.test(value);
+        }
+    
+        function updateInputStyle(input, isValid) {
+            if (isValid) {
+                input.style.border = "2px solid green";
+            } else {
+                input.style.border = "2px solid red";
+            }
+        }
+    
+        function validatePasswords() {
+            const value1 = password1.value;
+            const value2 = password2.value;
+    
+            const valid1 = validatePasswordStrength(value1);
+            const valid2 = validatePasswordStrength(value2) && value1 === value2;
+    
+            updateInputStyle(password1, valid1);
+            updateInputStyle(password2, valid2);
+        }
+    
+        password1.addEventListener("input", validatePasswords);
+        password2.addEventListener("input", validatePasswords);
+    </script>
+    
+</body>
+</html>

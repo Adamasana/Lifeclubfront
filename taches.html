@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats Perso</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/stat_perso.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid bg-secondary mb-1">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">SANA Adama</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="index.html">Accueil</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Statistiques SANA Adama</p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="row px-xl-4">
+        <div class="col">
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <div>
+                
+                        <form method="post" action="#">
+
+                            <div class="statistics-options" style="display:flex; justify-content: space-around; margin: 20px;">
+                                <div>
+                                    <input type="radio" id="today" name="statistics-period" value="today" checked>
+                                    <label for="today">Aujourd'hui</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="dayly" name="statistics-period" value="journalier">
+                                    <label for="dayly">Journalier</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="weekly" name="statistics-period" value="hebdomadaire">
+                                    <label for="weekly">Hebdomadaire</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="monthly" name="statistics-period" value="mensuelle">
+                                    <label for="monthly">Mensuelle</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="yearly" name="statistics-period" value="annuelle">
+                                    <label for="yearly">Annuelle</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="custom" name="statistics-period" value="personnalisee">
+                                    <label for="custom">Autre</label><br>
+                                </div>
+                            </div>
+                            
+                            <div id="custom-date-range" class="custom-date-range" style="text-align: center; margin: 30px;">
+                                <label for="start-date">Date de début :</label>
+                                <input type="date" id="start-date" name="start-date" value="{{ start_date }}">
+                                
+                                <label for="end-date">Date de fin :</label>
+                                <input type="date" id="end-date" name="end-date" value="{{ end_date }}">
+                            </div>
+                            
+                            <div id="dayly-date-range" class="dayly-date-range" style="text-align: center; margin: 30px;">
+                                <label for="day">Jour:</label>
+                                <input type="date" id="day" name="day" value="{{ day }}">
+                            </div>
+                        
+                            <div class="Validate" style="text-align: center; margin: 30px;">
+                                <button class="btn btn-primary" type="submit">Valider</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                        <p>Statistiques du 12 Juillet 2k24  au 13 Mars 2k25</p>
+                    </div>
+
+                    <div class="cases">
+                        <div class="cards">
+                                <!-- Statistiques Client -->
+                                <div class="card-single">
+                                    <div>
+                                        <h2>12</h2>
+                                        <small>Articles vendus</small>
+                                    </div>
+                                    <div>
+                                        <span class="fas fa-chart-line" style="color: #5fbff2;"></span>
+                                    </div>
+                                </div>
+
+                                <div class="card-single">
+                                    <div>
+                                        <h2>12</h2>
+                                        <small>Achats realisées</small>
+                                    </div>
+                                    <div>
+                                        <span class="fas fa-chart-line" style="color: #5fbff2;"></span>
+                                    </div>
+                                </div>
+                    
+                                <div class="card-single">
+                                    <div>
+                                        <h2>121</h2>
+                                        <small>Factures enregistrées</small>
+                                    </div>
+                                    <div>
+                                        <span class="fas fa-shopping-cart" style="color: #5fbff2;"></span>
+                                    </div>
+                                </div>
+                    
+                                <div class="card-single">
+                                    <div>
+                                        <h2>1131 FCFA</h2>
+                                        <small>Chiffre d'affaire brut</small>
+                                    </div>
+                                    <div>
+                                        <span class="fa fa-outdent" style="color: #5fbff2;"></span>
+                                    </div>
+                                </div>
+
+                                <div class="card-single">
+                                    <div>
+                                        <h2>1312 FCFA</h2>
+                                        <small>Remise totale</small>
+                                    </div>
+                                    <div>
+                                        <span class="fas fa-tags" style="color: #5fbff2;"></span>
+                                    </div>
+                                </div>
+                    
+                                <div class="card-single">
+                                    <div>
+                                        <h2>1232 FCFA</h2>
+                                        <small>Chiffre d'affaire encaissé</small>
+                                    </div>
+                                    <div>
+                                        <span class="fas fa-hand-holding-usd" style="color: #5fbff2;"></span>
+                                    </div>
+                                </div>
+                    
+                                <div class="card-single">
+                                    <div>
+                                        <h2>3</h2>
+                                        <small>Depenses</small>
+                                    </div>
+                                    <div>
+                                        <span class="fas fa-money-check-alt icon" style="color: #5fbff2;"></span>
+                                    </div>
+                                </div>
+
+                                <div class="card-single">
+                                    <div>
+                                        <h2>212 FCFA</h2>
+                                        <small>Depensés</small>
+                                    </div>
+                                    <div>
+                                        <span class="fas fa-money-check-alt icon" style="color: #5fbff2;"></span>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    
+                    
+
+                    <div class="composant" style="margin-top: 25px;">
+                        <div class="ventes">
+                            <div class="case">
+                                <div class="header-case">
+                                    <h2>Factures</h2>
+                                </div>
+                                <div class="body-case" style="max-height: 700px; overflow-y: auto;">
+                                    <div class="tableau table-responsive mb-5">
+                                        
+                                        <table width="100%" class="table text-center mb-0">
+                                            <thead class="bg-secondary text-dark">
+                                                <tr>
+                                                    <th>Numero</th>
+                                                    <th>Nom</th>
+                                                    <th>Montant</th>
+                                                    <th>Remise</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <tr style="cursor: pointer" onclick="window.location.href='#'">
+                                                    <td>LC211</td>
+                                                    <td>Fiarma Landry</td>
+                                                    <td>1222 FCFA</td>
+                                                    <td>132331 FCFA</td>
+                                                    <td>3232 FCFA</td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const customRadio = document.getElementById('custom');
+            const daylyRadio = document.getElementById('dayly');
+            const customDateRange = document.getElementById('custom-date-range');
+            const daylyDateRange = document.getElementById('dayly-date-range');
+        
+            const hideAllDateRanges = () => {
+                customDateRange.style.display = 'none';
+                daylyDateRange.style.display = 'none';
+            };
+        
+            const showRelevantDateRange = () => {
+                const selected = document.querySelector('input[name="statistics-period"]:checked');
+                hideAllDateRanges();
+                if (selected) {
+                    if (selected.id === 'custom') {
+                        customDateRange.style.display = 'block';
+                    } else if (selected.id === 'dayly') {
+                        daylyDateRange.style.display = 'block';
+                    }
+                }
+            };
+        
+            // Attach change events
+            document.querySelectorAll('input[name="statistics-period"]').forEach(radio => {
+                radio.addEventListener('change', showRelevantDateRange);
+            });
+        
+            // Initial load
+            showRelevantDateRange();
+        });
+        </script>
+        
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

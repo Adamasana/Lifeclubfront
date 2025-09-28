@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paramètres</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #5fbff2;
+      --white: #ffffff;
+      --gray: #f0f0f0;
+      --text: #333;
+      --danger: #dc3545;
+      --secondary: #6c757d;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--gray);
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: var(--white);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .title {
+      font-size: 28px;
+      color: var(--primary);
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px;
+      background: var(--gray);
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--primary);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .tab.active {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: 500;
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn.delete {
+      background: var(--danger);
+      color: var(--white);
+    }
+
+    .btn.confirm {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn.cancel {
+      background: var(--secondary);
+      color: var(--white);
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: var(--white);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 12px 20px;
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1001;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      .tabs {
+        flex-direction: column;
+      }
+      .tab {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title"><i class="fas fa-cog"></i> Paramètres du compte</h1>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('infos')"><i class="fas fa-user"></i> Infos</button>
+      <button class="tab" onclick="showTab('boutiques')"><i class="fas fa-store"></i> Boutiques</button>
+      <button class="tab" onclick="showTab('employes')"><i class="fas fa-users"></i> Employés</button>
+    </div>
+
+    <div id="infos" class="tab-content active">
+      <div class="card">
+        <h2><i class="fas fa-id-card"></i> Informations personnelles</h2>
+        <p><strong>Identifiant :</strong> PES12345 </p>
+        <p><strong>Nom :</strong> Adama Koné</p>
+        <p><strong>Téléphone :</strong> +33 6 XX XX XX XX</p>
+        <p><strong>Email :</strong> adama@example.com</p>
+        <p><strong>Rôle :</strong> Propriétaire</p>
+        <p><strong>Parrain :</strong> Moussa Diallo (PES12345)</p>
+      </div>
+    </div>
+
+    <div id="boutiques" class="tab-content">
+      <div class="card">
+        <h2><i class="fas fa-store"></i> Adama Market</h2>
+        <p><strong>Adresse :</strong> 12 rue du Commerce</p>
+        <p><strong>Identifiant :</strong> PES12345 </p>
+        <p><strong>Statut :</strong> ✅ Actif</p>
+        <p><strong>Abonnement :</strong> 15 000 FCFA</p>
+        <p><strong>Date Abonnement :</strong> 12 Juillet 2k25</p>
+        <p><strong>Date Reabonnement :</strong> 12 Juillet 2k25</p>
+        <button class="btn delete" onclick="confirmDelete('Adama Market')"><i class="fas fa-trash"></i> Supprimer</button>
+      </div>
+    </div>
+
+    <div id="employes" class="tab-content">
+      <div class="card">
+        <h2><i class="fas fa-user-tie"></i> Mamadou Sarr</h2>
+        <p><strong>Telehone :</strong> +226 54279448</p>
+        <p><strong>Poste :</strong> Caissier</p>
+        <p><strong>Boutique :</strong> Adama Market</p>
+        <p><strong>Statut :</strong> ✅ Actif</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <p>Confirmer la suppression de <span id="item-name"></span> ?</p>
+      <button class="btn confirm" onclick="deleteItem()">Confirmer</button>
+      <button class="btn cancel" onclick="closeModal()">Annuler</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Boutique supprimée !</div>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function confirmDelete(name) {
+      document.getElementById('item-name').textContent = name;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    function deleteItem() {
+      closeModal();
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+</body>
+</html>

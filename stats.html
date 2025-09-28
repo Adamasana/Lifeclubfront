@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques</title>
+    <link href="img/favicon.ico" rel="icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/statistiques.css" rel="stylesheet">    
+</head>
+
+<body>
+    <div class="container-fluid bg-secondary mb-1">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Statistiques</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="index.html">Accueil</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0" >Statistiques</p>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="row px-xl-4">
+        <div class="col">
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <div>
+                
+                        <form method="post" action="#">
+
+                            <div class="statistics-options" style="display:flex; justify-content: space-around; margin: 20px;">
+                                <div>
+                                    <input type="radio" id="today" name="statistics-period" value="today" checked>
+                                    <label for="today">Aujourd'hui</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="dayly" name="statistics-period" value="journalier">
+                                    <label for="dayly">Journalier</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="weekly" name="statistics-period" value="hebdomadaire">
+                                    <label for="weekly">Hebdomadaire</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="monthly" name="statistics-period" value="mensuelle">
+                                    <label for="monthly">Mensuelle</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="yearly" name="statistics-period" value="annuelle">
+                                    <label for="yearly">Annuelle</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" id="custom" name="statistics-period" value="personnalisee">
+                                    <label for="custom">Autre</label><br>
+                                </div>
+                            </div>
+                            
+                            <div id="custom-date-range" class="custom-date-range" style="text-align: center; margin: 30px;">
+                                <label for="start-date">Date de début :</label>
+                                <input type="date" id="start-date" name="start-date" value="{{ start_date }}">
+                                
+                                <label for="end-date">Date de fin :</label>
+                                <input type="date" id="end-date" name="end-date" value="{{ end_date }}">
+                            </div>
+                            
+                            <div id="dayly-date-range" class="dayly-date-range" style="text-align: center; margin: 30px;">
+                                <label for="day">Jour:</label>
+                                <input type="date" id="day" name="day" value="{{ day }}">
+                            </div>
+                        
+                            <div class="Validate" style="text-align: center; margin: 30px;">
+                                <button class="btn btn-primary" type="submit">Valider</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                        <p>Statistiques du 12 Juillet 2k24  au 12 Aout 2k25</p>
+                    </div>
+
+                    <div class="cases">
+                        <h1>Global</h1>
+                        <div class="cards">
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>12</h2>
+                                    <small>Articles vendus</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-cubes" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>13</h2>
+                                    <small>Achats</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-truck-loading" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>231</h2>
+                                    <small>Commandes</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-receipt" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>2112 FCFA</h2>
+                                    <small>Chiffre d'affaire</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-chart-line" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>212 FCFA</h2>
+                                    <small>Remise</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-percentage" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>121 FCFA</h2>
+                                    <small>Encaissé</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-money-bill-wave" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>31221 FCFA</h2>
+                                    <small>Coût import</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-shipping-fast" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>3122 FCFA</h2>
+                                    <small>Marge</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-balance-scale-left" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>3211</h2>
+                                    <small>Dépenses</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-file-invoice-dollar" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>3212 FCFA</h2>
+                                    <small>Valeur Dépenses</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-wallet" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2 class="text-success">32123 FCFA</h2>
+                                    <small>Marge Net</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-coins" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>23</h2>
+                                    <small>Clients</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-user-friends" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>2312</h2>
+                                    <small>Approvisions</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-boxes" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                            <div class="card-single">
+                                <div>
+                                    <h2>32332 FCFA</h2>
+                                    <small>Valeur Approvision</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-dolly-flatbed" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2>2</h2>
+                                    <small>Inventaires</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-envelope" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2>232 FCFA</h2>
+                                    <small>Perte inventaire</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-envelope" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                               
+
+
+
+                    <div class="cases">
+                        <h1>Life Club</h1>
+                        <div class="cards">
+                            <div class="card-single">
+                                <div>
+                                    <h2>232</h2>
+                                    <small>Achats réalisés</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-truck-loading" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2>233</h2>
+                                    <small>Commandes</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-shopping-cart" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2>43232 FCFA</h2>
+                                    <small>Chiffre d'affaire</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-chart-line" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2>3322 FCFA</h2>
+                                    <small>Marge</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-hand-holding-usd" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2>4323 FCFA</h2>
+                                    <small>Remises</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-cubes" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2>3323 FCFA</h2>
+                                    <small>Valeur Dépenses</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-wallet" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2 class="text-success">32323 FCFA</h2>
+                                    <small>Marge Net</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-balance-scale" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                            <div class="card-single">
+                                <div>
+                                    <h2>232</h2>
+                                    <small>Clients</small>
+                                </div>
+                                <div>
+                                    <span class="fas fa-user-friends" style="color: #5fbff2;"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                <div class="composant" style="margin-top: 25px;">
+                    <div class="ventes">
+                        <div class="case">
+                            <div class="header-case">
+                                <h2>Produits</h2>
+                            </div>
+                            <div class="body-case" style="max-height: 700px; overflow-y: auto;">
+                                <div class="tableau">
+                                    <table width="100%" class="table text-center mb-0">
+                                        <thead class="bg-secondary text-dark">
+                                            <tr>
+                                                <td>Nom</td>
+                                                <td>Ventes</td>
+                                                <td>%Ventes</td>
+                                                <td>Chiffre Affaire</td>
+                                                <td>Marge</td>
+                                                <td>%Marge</td>
+                                                <td>Stock</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td style="color: #5fbff2;">Coca</td>
+                                                <td>12</td>
+                                                <td>21 %</td>
+                                                <td>231 FCFA</td>
+                                                <td>322 FCFA</td>
+                                                <td>21 %</td>
+                                                <td class="text-success">
+                                                    25
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="stock" >
+                    <div class="case" style="max-height: 700px; overflow-y: auto;">
+                        <div class="header-case">
+                            <h2>Employés</h2>
+                        </div>
+            
+                        <div class="body-case">
+
+                            <div class="all-users" style="border-bottom: 1px solid rgba(128, 128, 128, 0.36);">
+                                <div class="infos">
+                                    <div>
+                                        <h4>SANA Adama</h4>
+                                        <small>
+                                            <span style="color: #5fbff2;">15</span> Commandes traitées<br>
+                                            <span style="color: #5fbff2;">21</span> Articles vendus
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="user-contact">
+                                    <span class="fa fa-user-tie"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="header-case">
+                            <h2 >Clients</h2>
+                        </div>
+            
+                        <div class="body-case">
+
+                            <div class="all-users" style="border-bottom: 1px solid rgba(128, 128, 128, 0.36);">
+                                <div class="infos">
+                                    <div>
+                                        <h4>SANA Adama - +226 54342312</h4>
+                                        <small>
+                                            <span style="color: #5fbff2;">23</span> Commandes<br>
+                                            <span style="color: #5fbff2;">34332</span> Articles achetés
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="user-contact">
+                                    <span class="fa fa-user"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const customRadio = document.getElementById('custom');
+            const daylyRadio = document.getElementById('dayly');
+            const customDateRange = document.getElementById('custom-date-range');
+            const daylyDateRange = document.getElementById('dayly-date-range');
+        
+            const hideAllDateRanges = () => {
+                customDateRange.style.display = 'none';
+                daylyDateRange.style.display = 'none';
+            };
+        
+            const showRelevantDateRange = () => {
+                const selected = document.querySelector('input[name="statistics-period"]:checked');
+                hideAllDateRanges();
+                if (selected) {
+                    if (selected.id === 'custom') {
+                        customDateRange.style.display = 'block';
+                    } else if (selected.id === 'dayly') {
+                        daylyDateRange.style.display = 'block';
+                    }
+                }
+            };
+        
+            // Attach change events
+            document.querySelectorAll('input[name="statistics-period"]').forEach(radio => {
+                radio.addEventListener('change', showRelevantDateRange);
+            });
+        
+            // Initial load
+            showRelevantDateRange();
+        });
+        </script>
+        
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Details Facture</h1>
+            <div class="d-inline-flex mb-5">
+                <p class="m-0"><a href="factures.html">Retour</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0" onclick="window.location.href='#'" style="cursor: pointer;">Ajouter</p>
+            </div>
+
+        </div>
+
+        <form id="auto-form" method="post" action="#" style="display: none;">
+            <input type="text" id="code-input" name="sous_produit[]" required>
+            <input type="number" id="quantite-input" name="quantite[]" value="1" required>
+            <button type="submit" id="submit-btn">Ajouter</button>
+        </form> 
+
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Accepter Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-8 table-responsive mb-5">
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>Produits</th>
+                            <th>Prix Unitaire</th>
+                            <th>Quantités</th>
+                            <th>Total</th>
+
+                                <th>Marge</th>
+
+                            <th>Stock</th>
+                            <th>Annuler</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        
+
+                            <tr> 
+                                <td class="align-middle">Fanta</td>
+                                <td class="align-middle">13212 FCFA</td>
+                                <td class="align-middle">11</td>
+                                <td class="align-middle">21132 FCFA</td>
+
+                                <td class="align-middle">23222 FCFA</td>
+
+                                <td class="align-middle">232</td>
+
+                                <td class="align-middle">
+
+                                        <button data-toggle="modal" data-target="#confirmModalDeclaration1" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+
+                                </td>
+
+                                <!-- MODAL Suppression-->
+                                <div class="modal fade" id="confirmModalDeclaration1" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <form method="post" action="#">
+
+                                        <input type="hidden" name="ine">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmModalLabel">Confirmer la suppression</h5>
+                                            <strong style="cursor: pointer;" class="close" data-dismiss="modal" aria-label="Fermer">
+                                            <span aria-hidden="true">&times;</span>
+                                            </strong>
+                                        </div>
+                                        <div class="modal-body">
+                                            Sûr de vouloir supprimer cet achat ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                        </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                            </tr>
+
+
+                            
+                    </tbody>
+
+
+                    <!-- MODAL Suppression-->
+                    <div class="modal fade" id="confirmModalDeclaration" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <form method="post" action="#">
+
+                            <input type="hidden" name="ine">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmModalLabel">Confirmer la suppression</h5>
+                                <strong style="cursor: pointer;" class="close" data-dismiss="modal" aria-label="Fermer">
+                                <span aria-hidden="true">&times;</span>
+                                </strong>
+                            </div>
+                            <div class="modal-body">
+                                Sûr de vouloir supprimer cette facture ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                            </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    
+                </table>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Commande</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Date validation</h6>
+                            <h6 class="font-weight-medium">12 Juillet 2k24</h6>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Montant</h6>
+                            <h6 class="font-weight-medium">13231 FCFA</h6>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Remise</h6>
+                            <h6 class="font-weight-medium">13122 FCFA</h6>
+                        </div>
+
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">Marge</h6>
+                                <h6 class="font-weight-medium">32312 FCFA</h6>
+                            </div>
+
+
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 class="font-weight-bold" style="color: #5fbff2;">123 FCFA</h5>
+                        </div>
+                        <button onclick="window.location.href='#'" class="btn btn-block btn-primary my-3 py-3" style="font-size: 25px; font-weight: bold;">Facture</button>
+                        <button data-toggle="modal" data-target="#confirmModalDeclaration" class="btn btn-block btn-primary my-3 py-3" style="font-size: 25px; font-weight: bold;">Supprimer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Accepter End -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let code = '';
+            let isScanning = false;
+            const delay = 100; // temps de reset après frappe
+        
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (code.length > 0) {
+                        // Envoie le formulaire caché
+                        document.getElementById('code-input').value = code;
+                        document.getElementById('quantite-input').value = 1;
+                        document.getElementById('auto-form').submit();
+                        code = '';
+                    }
+                } else if (e.key.length === 1) {
+                    // Ajoute uniquement les vrais caractères tapés (pas Shift, Ctrl, etc.)
+                    code += e.key;
+        
+                    clearTimeout(window.scanTimeout);
+                    window.scanTimeout = setTimeout(function () {
+                        code = ''; // Réinitialiser après un moment sans saisie
+                    }, delay);
+                }
+            });
+        });
+        </script>
+        
+        
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    
+
+    
+</body>
+</html>

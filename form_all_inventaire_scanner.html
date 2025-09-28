@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Scanner Inventaire</title>
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #333;
+      margin: 0;
+    }
+
+    #codeInput {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #validerBtn {
+      padding: 10px 20px;
+      background-color: #5fbff2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #validerBtn:hover {
+      background-color: #49a5d3;
+    }
+
+    #codeList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+      padding: 0;
+      list-style: none;
+    }
+
+    #codeList li {
+      background: white;
+      padding: 10px;
+      border-left: 5px solid #5fbff2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+    }
+
+    #codeList input {
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      flex-grow: 1;
+    }
+
+    #codeList button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <li style="list-style:none; text-align: center; color: red;">{{ message }}</li>
+                        {% elif message.tags == 'success' %}
+                            <li style="list-style:none; text-align: center; color: green;">{{ message }}</li>
+                        {% else %}
+                            <li style="list-style:none; text-align: center;">{{ message }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+  <!-- Champ de scan invisible -->
+  <input type="text" id="codeInput" placeholder="Scanner un code..." autocomplete="off" autofocus>
+
+  <!-- Titre et bouton centrés -->
+  <div class="header">
+    <h2>Scanner les produits</h2>
+    <button id="validerBtn">Valider</button>
+  </div>
+
+  <!-- Liste des scans -->
+  <ul id="codeList"></ul>
+
+  <script>
+    const input = document.getElementById("codeInput");
+    const list = document.getElementById("codeList");
+    const btn = document.getElementById("validerBtn");
+    const LS_KEY = "scanned_codes";
+
+    window.onload = () => input.focus();
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const code = input.value.trim();
+        if (code) {
+          addCode(code);
+          input.value = "";
+        }
+      }
+    });
+
+    function addCode(code) {
+      const codes = getCodes();
+      codes.push(code);
+      localStorage.setItem(LS_KEY, JSON.stringify(codes));
+      renderCodes();
+    }
+
+    function getCodes() {
+      return JSON.parse(localStorage.getItem(LS_KEY)) || [];
+    }
+
+    function renderCodes() {
+      const codes = getCodes();
+      list.innerHTML = "";
+      codes.forEach((code, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <input value="${code}" onchange="updateCode(${index}, this.value)" readonly>
+          <button onclick="removeCode(${index})">Supprimer</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function removeCode(index) {
+      const codes = getCodes();
+      codes.splice(index, 1);
+      localStorage.setItem(LS_KEY, JSON.stringify(codes));
+      renderCodes();
+    }
+
+    function updateCode(index, value) {
+      const codes = getCodes();
+      codes[index] = value;
+      localStorage.setItem(LS_KEY, JSON.stringify(codes));
+    }
+
+    btn.addEventListener("click", () => {
+      const codes = getCodes();
+
+      fetch("{% url 'index' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({ codes: codes })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message || "Succès !");
+        localStorage.removeItem(LS_KEY);
+        renderCodes();
+        input.focus();
+      })
+      .catch(() => alert("Erreur serveur"));
+    });
+
+    renderCodes();
+  </script>
+</body>
+</html>

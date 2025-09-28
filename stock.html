@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits</title>
+    <link href="img/favicon.ico" rel="icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid bg-secondary mb-1">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Produits</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="{% url 'index' %}">Accueil</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0" onclick="window.location.href='{% url 'add_variation' %}'" style="cursor: pointer;">Ajouter</p>
+            </div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Rechercher" style="height: 45px; width: 325px; padding: 10px;">
+        </div>
+        <br>
+    </div>
+
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <li style="list-style:none; text-align: center; color: red;">{{ message }}</li>
+                {% elif message.tags == 'success' %}
+                    <li style="list-style:none; text-align: center; color: green;">{{ message }}</li>
+                {% else %}
+                    <li style="list-style:none; text-align: center;">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+    <div class="container-fluid mt-5">
+        <div class="row pb-3" id="product-list">
+
+                {% for variation  in variations %}
+                    <div class="col-lg-1 col-md-4 col-sm-6 col-6 pb-1 product-container">
+                        <a href="{% url 'details_variation' variation.id %}" class="product-item" style="text-decoration: none;">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="{{ variation.image.url }}" style="aspect-ratio: 1;" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-3 pb-1">
+                                    <h6 class="text-truncate mb-2 product-name" style="font-size: 14px;">{{ variation.nom }}</h6>    
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+
+    <!-- JS scripts here -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("search-input");
+            const productContainers = document.querySelectorAll(".product-container");
+
+            searchInput.addEventListener("input", function () {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                productContainers.forEach(function (container) {
+                    const productName = container.querySelector(".product-name").textContent.toLowerCase();
+                    if (productName.includes(searchTerm)) {
+                        container.style.display = "block"; // Show matching products
+                    } else {
+                        container.style.display = "none"; // Hide non-matching products
+                    }
+                });
+            });
+        });
+    </script>
+</html>

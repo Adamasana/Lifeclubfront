@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Facture</title>
+    <style>
+        body {
+            font-family: monospace;
+            font-size: 13px;
+            width: 58mm;
+            margin: 0 auto;
+        }
+        .center { text-align: center; }
+        .bold { font-weight: bold; }
+        .line {
+            border-top: 1px dashed #000;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+        }
+        th, td {
+            padding: 6px 0;
+            font-size: 12px;
+        }
+        th {
+            border-bottom: 1px solid #000;
+            text-align: left;
+        }
+        .total {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bloc principal avec hauteur minimale -->
+    <div style="min-height: 100mm;">
+        <div class="center bold" style="font-size: 14px; font-size: 25px;">{{ commande.boutique.nom }}</div>
+        <div class="center" style="margin-bottom: 5px;">Facture N° {{ commande.numero }}</div>
+
+        <table style="font-size: 20px;">
+            <tr>
+                <td>Client : {{ commande.nom }}</td>
+                <td style="text-align: right;">Caissier : {{ commande.caissier.get_full_name }}</td>
+            </tr>
+            <tr>
+                <td>Tél : {{ commande.telephone }}</td>
+                <td style="text-align: right;">Date : {{ commande.date_created|date:"d/m/Y H:i" }}</td>
+            </tr>
+        </table>
+
+        <div class="line"></div>
+
+        <table>
+            <thead>
+                <tr style="font-size: 20px;">
+                    <th>Désignation</th>
+                    <th>PU</th>
+                    <th>Qté</th>
+                    <th>Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for achat in achats %}
+                <tr>
+                    <td>{{ achat.variation.nom|truncatechars:16 }}</td>
+                    <td>{{ achat.prix_unitaire }}</td>
+                    <td>{{ achat.quantite }}</td>
+                    <td>{{ achat.montant }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="line"></div>
+        <table>
+            <tr>
+                <td></td>
+                <td style="text-align: right;">Total articles : {{ total_articles }}</td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td style="text-align: right;">Remise : {{ commande.remise }} FCFA</td>
+            </tr>
+
+            <tr class="bold">
+                <td></td>
+                <td style="text-align: right;">Total à payer : {{ commande.total }} FCFA</td>
+            </tr>
+        </table>
+
+        <div class="line"></div>
+    </div>
+
+    <!-- Pied de facture toujours en bas -->
+    <div class="center" style="font-size: 12px; margin-top: 10px;">
+        Merci pour votre achat !
+    </div>
+</body>
+</html>
